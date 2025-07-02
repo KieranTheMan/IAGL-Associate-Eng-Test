@@ -15,16 +15,15 @@ function setTodos(data) {
     payload: data,
   };
 }
-  // addTodo action to post a new todo to server and update store
+
 export function addTodo(todo) {
-  return function(dispatch) {
-    return axios
-      .post("http://localhost:9091/api/todo", todo)
-      .then(({ data }) => {
-        dispatch(setTodos(data.todos));
-      })
-      .catch(error => {
-        console.error('Error adding todo:', error);
-      });
+  return async function(dispatch) {
+    try {
+      const { data } = await axios
+        .post("http://localhost:9091/api/todo", todo);
+      dispatch(setTodos(data.todos));
+    } catch (error) {
+      console.error('Error adding todo:', error);
+    }
   };
 }
