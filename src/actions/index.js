@@ -1,5 +1,5 @@
 import axios from "axios";
-import { FETCH_TODOS } from "./types";
+import { FETCH_TODOS, ADD_TODO} from "./types";
 
 export function fetchTodos() {
   return function(dispatch) {
@@ -12,6 +12,19 @@ export function fetchTodos() {
 function setTodos(data) {
   return {
     type: FETCH_TODOS,
-    payload: data
+    payload: data,
+  };
+}
+  // addTodo action to post a new todo to server and update store
+export function addTodo(todo) {
+  return function(dispatch) {
+    return axios
+      .post("http://localhost:9091/api/todo", todo)
+      .then(({ data }) => {
+        dispatch(setTodos(data.todos));
+      })
+      .catch(error => {
+        console.error('Error adding todo:', error);
+      });
   };
 }
