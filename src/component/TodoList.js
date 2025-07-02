@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import Todo from "./Todo";
-import {fetchTodos} from "../actions";
+import {addTodo, fetchTodos} from "../actions";
 import {connect} from "react-redux";
 
 class TodoList extends Component {
@@ -64,6 +64,7 @@ const mapStateToProps = ({data = {}, isLoadingData = false}) => ({
 export default connect(
   mapStateToProps,
   {
-    fetchTodos
+    fetchTodos,
+    addTodo
   }
 )(TodoList);
