@@ -4,11 +4,30 @@ import {fetchTodos} from "../actions";
 import {connect} from "react-redux";
 
 class TodoList extends Component {
-  state = {};
+  state = {
+    newTodo: ""
+  };
 
+
+  // When the component mounts, fetch existing todos from the store
   componentDidMount() {
     this.props.fetchTodos();
   }
+
+  // Update local state as user types into the input field
+  handleChange = (e) => {
+    this.setState({newTodo: e.target.value});
+  }
+  // Handle form submission to add a new todo
+    handleSubmit = (e) => {
+      e.preventDefault();
+      const { newTodo } = this.state;
+      if (newTodo.trim()) {
+        // Dispatch the addTodo action
+        this.props.addTodo({ task: newTodo.trim() });
+        this.setState({ newTodo: "" }); // Clear input after adding
+      }
+    };
 
   render() {
     const {todos} = this.props.data;
